@@ -1,4 +1,6 @@
 // Add GeoJSON data.
+
+/*
 let sanFranAirport = 
 { "type": "FeatureCollection", "features": [{
     "type": "Feature",
@@ -17,6 +19,7 @@ let sanFranAirport =
             "type": "Point",
             "coordinates": [-122.375,37.61899948120117]}}
 ]};
+*/
 
 /*pseudo-code:
 L.geoJSON(data, {
@@ -25,9 +28,10 @@ L.geoJSON(data, {
     }
 });
 */
+let map = L.map('mapid').setView([30,30], 2);
 
-// Skill-drill: changing the map to outdoor styling and having the popup display
-// faa along with the airport name.
+/* Skill-drill: changing the map to outdoor styling and having the popup display
+faa along with the airport name.
 L.geoJson(sanFranAirport, {
     onEachFeature: function(feature, layer) {
         console.log(layer);
@@ -35,7 +39,7 @@ L.geoJson(sanFranAirport, {
             "<h3> Airport name: " + feature.properties.name + "</h3>");
     }
 }).addTo(map);
-
+*/
 
 // We create the tile layer that will be the background of our map. https://api.mapbox.com/styles/v1/mapbox/streets-v11
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -52,9 +56,29 @@ let airportData = "https://raw.githubusercontent.com/brand0j/Mapping_Earthquakes
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
-    console.log(data);
+    console.log(data)
     // Creating a GeoJSON layer with the retrieved data.
     L.geoJSON(data).addTo(map);
+});
+
+//Grabbing our GeoJSON data
+d3.json(airportData).then(function(data) {
+
+    // console.log(data)
+
+    // Creating a GeoJSON layer with the retrieved data.
+    L.geoJSON(data, {
+
+        onEachFeature: function(features, layer) {
+
+            // To know the key names of the properties we want in our popup
+            // console.log(layer);
+
+            // adding the popup with the faa code and name of the airport
+            layer.bindPopup("<h2> Airport code: " + features.properties.faa + "</h2> <hr>" +
+                "<h3> Airport name: " + features.properties.name + "</h3>");
+        }
+    }).addTo(map);
 });
 
 /* Different tile layer styling (copy & paste these right into the L.tileLayer(url) after https://api.mapbox.com/{styling}):
