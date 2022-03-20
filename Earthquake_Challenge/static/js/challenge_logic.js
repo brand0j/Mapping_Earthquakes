@@ -123,9 +123,6 @@ d3.json(earthquakeData).then(function(data) {
   allEarthquakes.addTo(map);
 
 
-
-
-
 // Retrieve the major earthquake GeoJSON data (mag>4.5) for the week
 d3.json(majorEarthquakeData).then(function(data) {
 
