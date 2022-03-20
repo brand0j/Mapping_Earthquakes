@@ -108,7 +108,6 @@ d3.json(earthquakeData).then(function(data) {
   L.geoJson(data, {
     	// We turn each feature into a circleMarker on the map.
     	pointToLayer: function(feature, latlng) {
-      		console.log(data);
       		return L.circleMarker(latlng);
         },
       // We set the style for each circleMarker using our styleInfo function.
@@ -130,6 +129,7 @@ d3.json(earthquakeData).then(function(data) {
 // Retrieve the major earthquake GeoJSON data (mag>4.5) for the week
 d3.json(majorEarthquakeData).then(function(data) {
 
+  console.log(data);
   // Use the same style as the earthquake data
   function styleInfo(feature) {
     return {
